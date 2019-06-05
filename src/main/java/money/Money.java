@@ -20,8 +20,9 @@ class Money implements Expression {
         Money money = (Money) object;
         return amount == money.amount && currency().equals(money.currency());
     }
-    public Money reduce(String to) {
-        return this;
+    public Money reduce(Bank bank, String to) {
+        int rate = bank.rate(currency, to);
+        return new Money(amount / rate, to);
     }
     public String toString() {
         return amount + " " + currency;
